@@ -1,0 +1,106 @@
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { createData, editData, deleteData } from "./action";
+import "./table.css";
+
+const Table = () => {
+  const dispatch = useDispatch();
+  const [Data, setData] = useState([]);
+  const onSubmitHandle = () => {
+    setData([...Data, value]);
+  };
+
+  const [value, setvalue] = useState({
+    name: "",
+    contact: "",
+    company: "",
+    email: "",
+  });
+  const onSetHandle = (e) => {
+    setvalue({ ...value, [e.target.name]: e.target.value });
+  };
+
+  return (
+    <>
+      <div className="table-container">
+        <table>
+          <tr>
+            <th>Name</th>
+            <th>Contact</th>
+            <th>Country</th>
+            <th>Email</th>
+            <th></th>
+          </tr>
+          {Data.map((i, key) => {
+            return (
+              <tr key={key}>
+                <td>{i.name}</td>
+                <td>{i.contact}</td>
+                <td>{i.company}</td>
+                <td>{i.email}</td>
+                <td>
+                  <div className="btnBox">
+                    <button>Edit</button>
+                    <button>Delete</button>
+                  </div>
+                </td>
+              </tr>
+            );
+          })}
+        </table>
+        <form style={{ marginTop: "16px" }}>
+          <label>Name:</label>
+          <input
+            type="text"
+            name="name"
+            value={value.name}
+            onChange={onSetHandle}
+          />
+          <label>Contact:</label>
+          <input
+            type="text"
+            name="contact"
+            value={value.contact}
+            onChange={onSetHandle}
+          />
+          <label>Country:</label>
+          <input
+            type="name"
+            name="company"
+            value={value.company}
+            onChange={onSetHandle}
+          />
+          <label>Email:</label>
+          <input
+            type="email"
+            name="email"
+            value={value.email}
+            onChange={onSetHandle}
+          />
+          {/* <input type="button" onClick={onSubmitHandle} value="submit" /> */}
+          <input type="button" onClick={()=>dispatch(createData(value))} value="submit" />
+        </form>
+      </div>
+    </>
+  );
+};
+
+export default Table;
+
+
+  {/* {Data.map((i, key) => {
+            return (
+              <tr key={key}>
+                <td>{i.name}</td>
+                <td>{i.contact}</td>
+                <td>{i.company}</td>
+                <td>{i.email}</td>
+                <td>
+                  <div className="btnBox">
+                    <button>Edit</button>
+                    <button>Delete</button>
+                  </div>
+                </td>
+              </tr>
+            );
+          })} */}

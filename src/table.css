@@ -1,0 +1,44 @@
+.table-container {
+  max-width: 992px;
+  width: 100%;
+  margin: auto;
+}
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+.btnBox {
+
+  display: flex;
+  justify-content: center;
+}
+.btnBox button:nth-child(1) {
+  padding: 10px 30px;
+  color: white;
+
+  background-color: red;
+  border: none;
+  border-radius: 10px;
+}
+.btnBox button:nth-child(2) {
+  border-radius: 10px;
+  padding: 10px 30px;
+  border: none;
+
+  margin-left: 10px;
+  background-color: yellow;
+}
+.green{
+  background-color: green !important;
+}
+td,
+th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
