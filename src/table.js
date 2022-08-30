@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
+import Modal from "react-modal"
 import "./table.css";
 import { useSelector, useDispatch } from "react-redux";
-import { createData, editData, deleteData } from "./action";
+import { createData, editData, deleteData,viewData } from "./action";
 
 const Table = () => {
   const list = useSelector((state) => state.crud.datalist);
   const editlist = useSelector((state) => state.crud.editIem);
   const updateList = useSelector((state) => state.crud.saveItem);
+  
   const dispatch = useDispatch();
   // const [Data, setData] = useState([]);
   // const onSubmitHandle = () => {
@@ -16,7 +18,8 @@ const Table = () => {
 
   console.log(editlist)
   
-  const [toggle, settoggle] = useState(false);
+  const [modal, setmodal] = useState(false)
+  const [toggle, settoggle] = useState('');
   const [value, setvalue] = useState({
     name: "",
     contact: "",
@@ -26,10 +29,14 @@ const Table = () => {
   useEffect(() => {
     setvalue(editlist);
   }, [editlist])
-
+  useEffect(()=>{
+    if(toggle) settoggle("");
+  
+  },[list])
   useEffect(() => {
     setvalue(updateList);
   }, [updateList])
+  console.log(updateList);
 
   
   const onSetHandle = (e) => {
@@ -57,9 +64,15 @@ const Table = () => {
                 <td>{e.data.email}</td>
                 <td>
                   <div className="btnBox">
+                  <button
+                      
+                      onClick={() => dispatch(viewData(e.id),setmodal(true))}
+                    >
+                      View
+                    </button>
                     <button
                       
-                      onClick={() => dispatch(editData(e.id), settoggle(true))}
+                      onClick={() => dispatch(editData(e.id,value), settoggle(e.id))}
                     >
                       Edit
                     </button>
@@ -108,7 +121,8 @@ const Table = () => {
             value="submit"
             onClick={() =>
               dispatch(
-                createData(value),
+
+                createData({...value,idProps:toggle}),
                 setvalue({
                   name: "",
                   contact: "",
@@ -122,6 +136,9 @@ const Table = () => {
           />
         </form>
       </div>
+      <Modal isOpen={modal}>
+        Modal Title
+      </Modal>
     </>
   );
 };

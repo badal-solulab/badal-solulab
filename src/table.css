@@ -17,7 +17,7 @@ table {
   padding: 10px 30px;
   color: white;
 
-  background-color: red;
+  background-color: lightblue;
   border: none;
   border-radius: 10px;
 }
@@ -27,7 +27,15 @@ table {
   border: none;
 
   margin-left: 10px;
-  background-color: yellow;
+  background-color: grey;
+}
+.btnBox button:nth-child(3) {
+  border-radius: 10px;
+  padding: 10px 30px;
+  border: none;
+
+  margin-left: 10px;
+  background-color: red;
 }
 .green{
   background-color: green !important;

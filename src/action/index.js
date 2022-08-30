@@ -7,10 +7,20 @@ export const createData = (data) =>{
         }
     }
 }
-export const editData = (id) =>{
+export const viewData = (data,id) =>{
+    return{
+        type:"VIEW",
+        payload:{
+           id,
+            data
+        }
+    }
+}
+export const editData = (id,data) =>{
     return{
         type:"EDIT",
         id,
+        data
         
     }
 }
