@@ -7,12 +7,11 @@ export const createData = (data) =>{
         }
     }
 }
-export const viewData = (data,id) =>{
+export const viewData = (id) =>{
     return{
         type:"VIEW",
         payload:{
            id,
-            data
         }
     }
 }

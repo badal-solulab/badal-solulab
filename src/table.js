@@ -1,25 +1,25 @@
 import React, { useEffect, useState } from "react";
-import Modal from "react-modal"
+import Modal from "react-modal";
 import "./table.css";
 import { useSelector, useDispatch } from "react-redux";
-import { createData, editData, deleteData,viewData } from "./action";
+import { createData, editData, deleteData, viewData } from "./action";
 
 const Table = () => {
   const list = useSelector((state) => state.crud.datalist);
   const editlist = useSelector((state) => state.crud.editIem);
   const updateList = useSelector((state) => state.crud.saveItem);
-  
+
   const dispatch = useDispatch();
   // const [Data, setData] = useState([]);
   // const onSubmitHandle = () => {
   //   setData([...Data, value]);
   // };
 
+  console.log(editlist);
 
-  console.log(editlist)
-  
-  const [modal, setmodal] = useState(false)
-  const [toggle, settoggle] = useState('');
+  const [modal, setmodal] = useState(false);
+  const [toggle, settoggle] = useState("");
+  const [error, seterror] = useState(false)
   const [value, setvalue] = useState({
     name: "",
     contact: "",
@@ -28,18 +28,15 @@ const Table = () => {
   });
   useEffect(() => {
     setvalue(editlist);
-  }, [editlist])
-  useEffect(()=>{
-    if(toggle) settoggle("");
-  
-  },[list])
+  }, [editlist]);
   useEffect(() => {
-    setvalue(updateList);
-  }, [updateList])
-  console.log(updateList);
+    if (toggle) settoggle("");
+  }, [list]);
 
-  
+  console.log(updateList)
+
   const onSetHandle = (e) => {
+    
     setvalue({ ...value, [e.target.name]: e.target.value });
   };
   console.log(value);
@@ -64,15 +61,17 @@ const Table = () => {
                 <td>{e.data.email}</td>
                 <td>
                   <div className="btnBox">
-                  <button
-                      
-                      onClick={() => dispatch(viewData(e.id),setmodal(true))}
+                    <button
+                      onClick={() =>
+                        dispatch(viewData(e.id), setmodal(true))
+                      }
                     >
                       View
                     </button>
                     <button
-                      
-                      onClick={() => dispatch(editData(e.id,value), settoggle(e.id))}
+                      onClick={() =>
+                        dispatch(editData(e.id, value), settoggle(e.id))
+                      }
                     >
                       Edit
                     </button>
@@ -84,7 +83,6 @@ const Table = () => {
               </tr>
             );
           })}
-        
         </table>
         <form style={{ marginTop: "16px" }}>
           <label>Name:</label>
@@ -93,6 +91,7 @@ const Table = () => {
             name="name"
             value={value.name}
             onChange={onSetHandle}
+
           />
           <label>Contact:</label>
           <input
@@ -100,6 +99,7 @@ const Table = () => {
             name="contact"
             value={value.contact}
             onChange={onSetHandle}
+
           />
           <label>Country:</label>
           <input
@@ -107,6 +107,7 @@ const Table = () => {
             name="company"
             value={value.company}
             onChange={onSetHandle}
+
           />
           <label>Email:</label>
           <input
@@ -121,8 +122,7 @@ const Table = () => {
             value="submit"
             onClick={() =>
               dispatch(
-
-                createData({...value,idProps:toggle}),
+                createData({ ...value, idProps: toggle }),
                 setvalue({
                   name: "",
                   contact: "",
@@ -130,14 +130,33 @@ const Table = () => {
                   email: "",
                 })
               )
-          
             }
-
           />
         </form>
       </div>
-      <Modal isOpen={modal}>
-        Modal Title
+      <Modal
+        isOpen={modal}
+        onRequestClose={() => {
+          setmodal(false);
+        }}
+      >
+        <div className="modalBox">
+          <p>Name:-</p>
+          <h4>{updateList.name}</h4>
+        </div>
+        <div className="modalBox">
+          <p>Contact:-</p>
+          <h4>{updateList.contact}</h4>
+        </div>
+        <div className="modalBox">
+          <p>Company:-</p>
+          <h4>{updateList.company}</h4>
+        </div>
+        <div className="modalBox">
+          <p>Email:-</p>
+          <h4>{updateList.email}</h4>
+        </div>
+      
       </Modal>
     </>
   );

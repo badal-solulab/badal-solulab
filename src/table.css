@@ -50,3 +50,21 @@ th {
 tr:nth-child(even) {
   background-color: #dddddd;
 }
+.modalBox{
+  display: flex;
+  align-items: center;
+}
+.modalBox h4{
+  margin-left: 10px;
+  flex: 50%;
+}
+.modalBox p{
+  margin-left: 10px;
+  flex: 50%;
+  text-align: right;
+}
+.ReactModal__Content.ReactModal__Content--after-open {
+  max-width: 400px;
+  margin: auto;
+  height: 300px;
+}

@@ -47,23 +47,14 @@ const crud = (state = initialData, action) => {
         ...state,
         editIem: newEditList.data,
       };
-    // const newArray = state.datalist.map((data,id)=>{
-    //   if (id===action.payload.id) {
-    //     return {
-    //       ...state,
-
-    //     };
-    //   } else {
-    //     return {
-    //       ...state,data
-    //     }
-    //     console.log(newArray,"asda");
-
-    //   }
-    // })
-
-    //  const newArray = oldArray.map((item,index)=>{if(index===payload.id} return newObj; else return item})
-
+   
+      case "VIEW":
+        const viewData = state.datalist.find((e)=>e.id===action.payload.id);
+        console.log(viewData);
+        return{
+          ...state,
+          saveItem:viewData.data,
+        }
     default:
       return state;
   }
