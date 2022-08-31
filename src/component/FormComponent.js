@@ -1,8 +1,8 @@
 import React from 'react'
-
+import "./form.css"
 const FormComponent = ({value,onSetHandle,createHandle}) => {
   return (
-    <form>
+    <form className='mt-3'>
         <label>Name:</label>
         <input
           type="text"

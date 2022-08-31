@@ -11,7 +11,7 @@ const TableComponent = ({list,viewHandle,editHandle,deleteHandle}) => {
             <th>Contact</th>
             <th>Country</th>
             <th>Email</th>
-            <th></th>
+            <th>Actions</th>
           </tr>
           {list.map((e) => {
             return (

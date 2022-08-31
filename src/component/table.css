@@ -8,6 +8,9 @@ table {
   border-collapse: collapse;
   width: 100%;
 }
+.table-container tr,.table-container th,.table-container td{
+  text-align: center;
+}
 .btnBox {
 
   display: flex;
