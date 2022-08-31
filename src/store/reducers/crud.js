@@ -1,20 +1,17 @@
-/* eslint-disable default-case */
 const initialData = {
   datalist: [],
   editIem: {},
   saveItem: {},
 };
 
-// const [datalist,setdatalist]=useState([])
-
 const crud = (state = initialData, action) => {
   switch (action.type) {
     case "CREATE":
-      const { id, data } = action.payload;
+      const { id, data,isedit } = action.payload;
       let newDataList = []
-      if(data.idProps){
+      if(isedit){
          newDataList = state.datalist.map(item=>{
-          if(item.id===data.idProps) return {id:item.id,data}
+          if(item.id===id) return {id:item.id,data}
           return item
         })
       } else{
@@ -37,12 +34,9 @@ const crud = (state = initialData, action) => {
         ...state,
         datalist: newList,
       };
-    // case "VIEW":
 
     case "EDIT":
       const newEditList = state.datalist.find((e) => e.id === action.id);
-      console.log(newEditList);
-      console.log("payload", action.payload);
       return {
         ...state,
         editIem: newEditList.data,
@@ -50,7 +44,6 @@ const crud = (state = initialData, action) => {
    
       case "VIEW":
         const viewData = state.datalist.find((e)=>e.id===action.payload.id);
-        console.log(viewData);
         return{
           ...state,
           saveItem:viewData.data,

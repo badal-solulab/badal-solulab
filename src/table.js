@@ -1,25 +1,17 @@
 import React, { useEffect, useState } from "react";
-import Modal from "react-modal";
-import "./table.css";
 import { useSelector, useDispatch } from "react-redux";
-import { createData, editData, deleteData, viewData } from "./action";
+import { createData, editData, deleteData, viewData } from "./store/action";
+import FormComponent from "./component/FormComponent";
+import ModalComponent from "./component/ModalComponent";
+import TableComponent from "./component/TableComponent";
 
 const Table = () => {
   const list = useSelector((state) => state.crud.datalist);
   const editlist = useSelector((state) => state.crud.editIem);
   const updateList = useSelector((state) => state.crud.saveItem);
-
   const dispatch = useDispatch();
-  // const [Data, setData] = useState([]);
-  // const onSubmitHandle = () => {
-  //   setData([...Data, value]);
-  // };
-
-  console.log(editlist);
-
   const [modal, setmodal] = useState(false);
   const [toggle, settoggle] = useState("");
-  const [error, seterror] = useState(false)
   const [value, setvalue] = useState({
     name: "",
     contact: "",
@@ -29,135 +21,56 @@ const Table = () => {
   useEffect(() => {
     setvalue(editlist);
   }, [editlist]);
+
   useEffect(() => {
     if (toggle) settoggle("");
   }, [list]);
 
-  console.log(updateList)
-
   const onSetHandle = (e) => {
-    
     setvalue({ ...value, [e.target.name]: e.target.value });
   };
-  console.log(value);
+
+  const createHandle = () => {
+    dispatch(
+      createData({ data:value, id: toggle || Math.random(), isedit:toggle ? true : false }),
+      setvalue({
+        name: "",
+        contact: "",
+        company: "",
+        email: "",
+      })
+    );
+  };
+  const viewHandle = (id) => {
+    dispatch(viewData(id));
+    setmodal(true);
+  };
+  const editHandle = (id) => {
+    dispatch(editData(id, value));
+    settoggle(id);
+  };
+  const deleteHandle = (id) => {
+    dispatch(deleteData(id));
+  };
 
   return (
     <>
-      <div className="table-container">
-        <table>
-          <tr>
-            <th>Name</th>
-            <th>Contact</th>
-            <th>Country</th>
-            <th>Email</th>
-            <th></th>
-          </tr>
-          {list.map((e) => {
-            return (
-              <tr key={e.id}>
-                <td>{e.data.name}</td>
-                <td>{e.data.contact}</td>
-                <td>{e.data.company}</td>
-                <td>{e.data.email}</td>
-                <td>
-                  <div className="btnBox">
-                    <button
-                      onClick={() =>
-                        dispatch(viewData(e.id), setmodal(true))
-                      }
-                    >
-                      View
-                    </button>
-                    <button
-                      onClick={() =>
-                        dispatch(editData(e.id, value), settoggle(e.id))
-                      }
-                    >
-                      Edit
-                    </button>
-                    <button onClick={() => dispatch(deleteData(e.id))}>
-                      Delete
-                    </button>
-                  </div>
-                </td>
-              </tr>
-            );
-          })}
-        </table>
-        <form style={{ marginTop: "16px" }}>
-          <label>Name:</label>
-          <input
-            type="text"
-            name="name"
-            value={value.name}
-            onChange={onSetHandle}
-
-          />
-          <label>Contact:</label>
-          <input
-            type="text"
-            name="contact"
-            value={value.contact}
-            onChange={onSetHandle}
-
-          />
-          <label>Country:</label>
-          <input
-            type="name"
-            name="company"
-            value={value.company}
-            onChange={onSetHandle}
-
-          />
-          <label>Email:</label>
-          <input
-            type="email"
-            name="email"
-            value={value.email}
-            onChange={onSetHandle}
-          />
-          {/* <input type="button" value="submit" /> */}
-          <input
-            type="button"
-            value="submit"
-            onClick={() =>
-              dispatch(
-                createData({ ...value, idProps: toggle }),
-                setvalue({
-                  name: "",
-                  contact: "",
-                  company: "",
-                  email: "",
-                })
-              )
-            }
-          />
-        </form>
-      </div>
-      <Modal
-        isOpen={modal}
-        onRequestClose={() => {
-          setmodal(false);
-        }}
-      >
-        <div className="modalBox">
-          <p>Name:-</p>
-          <h4>{updateList.name}</h4>
-        </div>
-        <div className="modalBox">
-          <p>Contact:-</p>
-          <h4>{updateList.contact}</h4>
-        </div>
-        <div className="modalBox">
-          <p>Company:-</p>
-          <h4>{updateList.company}</h4>
-        </div>
-        <div className="modalBox">
-          <p>Email:-</p>
-          <h4>{updateList.email}</h4>
-        </div>
-      
-      </Modal>
+      <TableComponent
+        list={list}
+        viewHandle={viewHandle}
+        editHandle={editHandle}
+        deleteHandle={deleteHandle}
+      />
+      <FormComponent
+        createHandle={createHandle}
+        value={value}
+        onSetHandle={onSetHandle}
+      />
+      <ModalComponent
+        modal={modal}
+        setmodal={setmodal}
+        updateList={updateList}
+      />
     </>
   );
 };

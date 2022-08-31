@@ -1,10 +1,11 @@
 export const createData = (data) =>{
     return{
         type:"CREATE",
-        payload:{
-            id:Math.random(),
-            data:data
-        }
+        payload:data
+        // payload:{
+        //     id:Math.random(),
+        //     data:data
+        // }
     }
 }
 export const viewData = (id) =>{

@@ -16,10 +16,12 @@ table {
 .btnBox button:nth-child(1) {
   padding: 10px 30px;
   color: white;
-
   background-color: lightblue;
   border: none;
   border-radius: 10px;
+}
+button {
+  cursor: pointer;
 }
 .btnBox button:nth-child(2) {
   border-radius: 10px;
